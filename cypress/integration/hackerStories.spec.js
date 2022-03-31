@@ -106,7 +106,7 @@ describe('Hacker Stories', () => {
                     cy.get('.item').should('have.length', 1);
                 });
 
-                context.only('Order by', () => {
+                context('Order by', () => {
                     it('orders by title', () => {
                         cy.get('.list-header-button:contains(Title)')
                             .as('titleHeader')
@@ -131,11 +131,59 @@ describe('Hacker Stories', () => {
                         ).should('have.attr', 'href', stories.hits[1].url);
                     });
 
-                    it('orders by author', () => {});
+                    it('orders by author', () => {
+                        cy.get('.list-header-button:contains(Author)')
+                            .as('authorHeader')
+                            .click();
 
-                    it('orders by comments', () => {});
+                        cy.get('.item')
+                            .first()
+                            .should('be.visible')
+                            .and('contain', stories.hits[0].author);
 
-                    it('orders by points', () => {});
+                        cy.get('@authorHeader').click();
+
+                        cy.get('.item')
+                            .first()
+                            .should('be.visible')
+                            .and('contain', stories.hits[1].author);
+                    });
+
+                    it('orders by comments', () => {
+                        cy.get('.list-header-button:contains(Comments)')
+                            .as('commentsHeader')
+                            .click();
+
+                        cy.get('.item')
+                            .first()
+                            .should('be.visible')
+                            .and('contain', stories.hits[1].num_comments);
+
+                        cy.get('@commentsHeader').click();
+
+                        cy.get('.item')
+                            .first()
+                            .should('be.visible')
+                            .and('contain', stories.hits[0].num_comments);
+                    });
+
+                    it('orders by points', () => {
+                        cy.get('.list-header-button:contains(Points)')
+                            .as('pointsHeader')
+                            .click();
+
+                        cy.get('.item')
+                            .first()
+                            .should('be.visible')
+                            .and('contain', stories.hits[1].points);
+
+                        cy.get('@pointsHeader').click();
+
+                        cy.get('.item')
+                            .first()
+                            .should('be.visible')
+                            .and('contain', stories.hits[0].points);
+                    });
                 });
             });
         });
@@ -174,14 +222,14 @@ describe('Hacker Stories', () => {
                 cy.get(`button:contains(${initialTerm})`).should('be.visible');
             });
 
-            // it('types and submits the form directly', () => {
-            //     cy.get('#search').type(`${newTerm}{enter}`);
-            //     cy.get('form').submit();
+            it('types and submits the form directly', () => {
+                cy.get('#search').type(`${newTerm}{enter}`);
+                cy.get('form').submit();
 
-            //     cy.wait('@getStories');
+                cy.wait('@getStories');
 
-            //     cy.get('.item').should('have.length', 2);
-            // });
+                cy.get('.item').should('have.length', 4);
+            });
 
             context('Last searches', () => {
                 it('shows a max of 5 buttons for the last searched terms', () => {
