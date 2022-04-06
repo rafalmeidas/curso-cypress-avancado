@@ -1,3 +1,5 @@
+const { faker } = require('@faker-js/faker');
+
 describe('Hacker Stories', () => {
     const initialTerm = 'React';
     const newTerm = 'Cypress';
@@ -263,7 +265,7 @@ describe('Hacker Stories', () => {
 
             context('Last searches', () => {
                 it('shows a max of 5 buttons for the last searched terms', () => {
-                    const faker = require('faker');
+                    // const faker = require('faker');
 
                     cy.intercept('GET', '**/search**', { fixture: 'empty' }).as(
                         'getRandomStories'
