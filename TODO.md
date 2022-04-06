@@ -16,3 +16,18 @@ cy.intercept('GET', '\*\*/search?query=React&page=0').as('getStories');
 
 });
 ```
+
+### Aula 26
+
+**Seletores complexos, como acessa-los de maneira mais simples**
+
+```
+cy.get('.last-searches').within(() => {
+    cy.get('button').should('have.length', 5);
+});
+```
+
+### Aula 27
+
+**Será necessário instalar a biblioteca `cypress-localstorage-commands` e importar no arquivo de `commands.js`**
+`import "cypress-localstorage-commands";`
